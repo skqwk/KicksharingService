@@ -12,7 +12,7 @@
 
 ## <a name="what_inside"></a> Что внутри?
 
-
+![image](https://user-images.githubusercontent.com/71013663/189409786-d80960ac-e62f-4a14-9789-23691236eff6.png)
 
 ## <a name="tools"></a> Какие инструменты используются?
 
