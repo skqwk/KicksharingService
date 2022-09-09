@@ -1,4 +1,4 @@
-package ru.skqwk.kicksharingservice.message;
+package ru.skqwk.kicksharingservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

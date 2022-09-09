@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import ru.skqwk.kicksharingservice.message.AuthOkResponse;
+import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

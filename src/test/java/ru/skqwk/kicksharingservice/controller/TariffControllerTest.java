@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import ru.skqwk.kicksharingservice.dto.TariffDTO;
 import ru.skqwk.kicksharingservice.dto.UserTariffDTO;
 import ru.skqwk.kicksharingservice.enumeration.TariffType;
-import ru.skqwk.kicksharingservice.message.AuthOkResponse;
+import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 import ru.skqwk.kicksharingservice.model.Tariff;
 import ru.skqwk.kicksharingservice.repo.TariffRepository;
 

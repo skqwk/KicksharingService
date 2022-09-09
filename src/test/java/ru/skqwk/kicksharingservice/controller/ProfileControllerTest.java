@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.skqwk.kicksharingservice.dto.UserAccountDTO;
 import ru.skqwk.kicksharingservice.dto.UserAccountEditDTO;
-import ru.skqwk.kicksharingservice.message.AuthOkResponse;
+import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

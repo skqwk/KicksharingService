@@ -1,6 +1,6 @@
 package ru.skqwk.kicksharingservice.service;
 
-import ru.skqwk.kicksharingservice.message.UserCredentials;
+import ru.skqwk.kicksharingservice.dto.UserCredentials;
 
 public interface AuthService {
   String authenticate(UserCredentials userCredentials);

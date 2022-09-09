@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.skqwk.kicksharingservice.exception.BadInputParameters;
 import ru.skqwk.kicksharingservice.exception.ConflictDataException;
 import ru.skqwk.kicksharingservice.exception.ResourceNotFoundException;
-import ru.skqwk.kicksharingservice.message.ErrorResponse;
+import ru.skqwk.kicksharingservice.dto.ErrorResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

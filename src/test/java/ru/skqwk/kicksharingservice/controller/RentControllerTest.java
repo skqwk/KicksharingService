@@ -19,7 +19,7 @@ import ru.skqwk.kicksharingservice.dto.UserRentDTO;
 import ru.skqwk.kicksharingservice.enumeration.RentStatus;
 import ru.skqwk.kicksharingservice.enumeration.ScooterStatus;
 import ru.skqwk.kicksharingservice.enumeration.TariffType;
-import ru.skqwk.kicksharingservice.message.AuthOkResponse;
+import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 import ru.skqwk.kicksharingservice.model.Model;
 import ru.skqwk.kicksharingservice.model.Rent;
 import ru.skqwk.kicksharingservice.model.RentPoint;

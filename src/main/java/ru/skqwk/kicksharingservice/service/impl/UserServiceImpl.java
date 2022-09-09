@@ -12,7 +12,7 @@ import ru.skqwk.kicksharingservice.dto.UserAccountEditDTO;
 import ru.skqwk.kicksharingservice.enumeration.UserRole;
 import ru.skqwk.kicksharingservice.exception.BadInputParameters;
 import ru.skqwk.kicksharingservice.exception.ConflictDataException;
-import ru.skqwk.kicksharingservice.message.UserRegisterRequest;
+import ru.skqwk.kicksharingservice.dto.UserRegisterRequest;
 import ru.skqwk.kicksharingservice.model.UserAccount;
 import ru.skqwk.kicksharingservice.repo.UserRepository;
 import ru.skqwk.kicksharingservice.service.UserService;

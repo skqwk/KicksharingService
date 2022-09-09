@@ -7,7 +7,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ru.skqwk.kicksharingservice.message.UserCredentials;
+import ru.skqwk.kicksharingservice.dto.UserCredentials;
 import ru.skqwk.kicksharingservice.security.JwtTokenUtil;
 import ru.skqwk.kicksharingservice.service.AuthService;
 import ru.skqwk.kicksharingservice.service.UserService;

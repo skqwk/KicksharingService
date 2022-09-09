@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import ru.skqwk.kicksharingservice.dto.ModelDTO;
-import ru.skqwk.kicksharingservice.message.AuthOkResponse;
+import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 import ru.skqwk.kicksharingservice.model.Model;
 import ru.skqwk.kicksharingservice.repo.ModelRepository;
 

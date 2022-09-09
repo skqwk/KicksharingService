@@ -1,4 +1,4 @@
-package ru.skqwk.kicksharingservice.message;
+package ru.skqwk.kicksharingservice.dto;
 
 import lombok.Builder;
 import lombok.Getter;
