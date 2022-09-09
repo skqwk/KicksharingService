@@ -1,0 +1,19 @@
+jwt:
+  secretKey: "kicksharingmegaverysupersecretkey"
+  tokenPrefix: ""
+  tokenExpirationAfterDays: 14
+
+manager-token: "manager_token"
+
+#spring:
+#  datasource:
+#    password: 11
+#    url: "jdbc:postgresql://localhost:5432/kicksharing"
+#    username: root
+#  jpa:
+#    hibernate:
+#      ddl-auto: none
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+#        format_sql: true
