@@ -6,6 +6,7 @@
 - [Что внутри?](#what_inside)
 - [Какие инструменты используются?](#tools)
 - [Сборка и деплой](#build_and_deploy)
+- [Логирование](#logging)
 
 ## <a name="what_inside"></a> Что внутри?
 
@@ -29,3 +30,7 @@
 ## <a name="build_and_deploy"></a> Сборка и деплой
 
 Для сборки проекта нужно запустить скрипт `build.sh`, для запуска сервиса и БД в Docker - `run.sh`, для остановки - `down.sh`
+
+## <a name="logging"></a> Логирование
+
+Логирование настроено в файле `src/main/resources/logback.xml`. На уровне `INFO` пишутся логи в файл `logs/operations.log`, на уровне `DEBUG` в консоль. При размере файла `operations.log > 10MB`, создается новый `operations.log`, а старый добавляется в `logs/archived` 
