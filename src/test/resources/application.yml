@@ -13,6 +13,20 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: true
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: 'true'
+          ssl:
+            enable: 'true'
+          auth: 'true'
+    host: smtp.yandex.ru
+    username: spring-server@yandex.ru
+    password: y/%-q%,Rz[#SV9J
+    port: '465'
+
 jwt:
   secretKey: "test-kicksharingmegaverysupersecretkey"
   tokenPrefix: "test-Bearer"
