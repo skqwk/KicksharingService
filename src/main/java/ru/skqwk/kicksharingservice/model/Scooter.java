@@ -18,10 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.Duration;
 
-/**
- * Сущность для представления самоката.
- *
- */
+/** Сущность для представления самоката. */
 @Getter
 @Setter
 @Entity

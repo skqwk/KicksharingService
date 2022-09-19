@@ -33,25 +33,25 @@ public class ScooterController extends BaseController {
 
   @PostMapping("/scooter")
   @ApiOperation(value = "Добавление нового самоката")
-  public Scooter createNewScooter(@Valid  @RequestBody NewScooterDTO newScooter) {
+  public Scooter createNewScooter(@Valid @RequestBody NewScooterDTO newScooter) {
     return scooterService.addNewScooter(newScooter);
   }
 
   @PutMapping("/scooter/{id}")
-  @ApiOperation(value  = "Обновление самоката")
+  @ApiOperation(value = "Обновление самоката")
   public Scooter updateScooter(
-      @PathVariable(name = "id") Long id,@Valid @RequestBody NewScooterDTO updatedScooter) {
+      @PathVariable(name = "id") Long id, @Valid @RequestBody NewScooterDTO updatedScooter) {
     return scooterService.updateScooter(id, updatedScooter);
   }
 
   @GetMapping("/scooter/{id}")
-  @ApiOperation(value  = "Получение самоката")
+  @ApiOperation(value = "Получение самоката")
   public Scooter findScooter(@PathVariable(name = "id") Long id) {
     return scooterService.findScooter(id);
   }
 
   @GetMapping("/scooters")
-  @ApiOperation(value  = "Получение всех самокатов")
+  @ApiOperation(value = "Получение всех самокатов")
   public List<Scooter> findAllScooters() {
     return scooterService.findAllScooters();
   }

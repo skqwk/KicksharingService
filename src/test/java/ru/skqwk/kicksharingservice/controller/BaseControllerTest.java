@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 import ru.skqwk.kicksharingservice.dto.UserCredentials;
 import ru.skqwk.kicksharingservice.dto.UserRegisterRequest;
-import ru.skqwk.kicksharingservice.security.JwtConfig;
+import ru.skqwk.kicksharingservice.config.security.JwtConfig;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package ru.skqwk.kicksharingservice.security;
+package ru.skqwk.kicksharingservice.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

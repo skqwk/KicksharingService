@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.skqwk.kicksharingservice.dto.TariffDTO;
 import ru.skqwk.kicksharingservice.enumeration.TariffType;
-import ru.skqwk.kicksharingservice.exception.BadInputParameters;
+import ru.skqwk.kicksharingservice.exception.BadInputParametersException;
 import ru.skqwk.kicksharingservice.service.TariffValidator;
 import ru.skqwk.kicksharingservice.service.util.Validator;
 
@@ -35,11 +35,11 @@ public class SubscriptionTariffValidator implements TariffValidator {
       Validator.requirePositive(tariffDTO.getSettlementCost());
     } catch (NullPointerException ex) {
       log.warn("Try create tariff without mandatory fields");
-      throw new BadInputParameters(
+      throw new BadInputParametersException(
           "Subscription tariff must have fields tariffCost, durationInHours, settlementCost, settlementFor not null");
     } catch (IllegalArgumentException ex) {
       log.warn("Try create tariff with incorrect interval of values");
-      throw new BadInputParameters(
+      throw new BadInputParametersException(
           "Subscription tariff must have fields tariffCost, durationInHours, settlementCost only > 0, and discount in interval [0, 1]");
     }
   }

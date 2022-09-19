@@ -14,9 +14,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
-/**
- * Сервис-калькулятор для подсчета стоимости аренды по тарифу с подпиской.
- */
+/** Сервис-калькулятор для подсчета стоимости аренды по тарифу с подпиской. */
 @Service
 @AllArgsConstructor
 public class SubscriptionTariffCalculator implements TariffCalculator {

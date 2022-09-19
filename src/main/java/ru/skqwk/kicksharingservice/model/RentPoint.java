@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,15 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-/**
- * Сущность для представления точки аренды.
- *
- */
+/** Сущность для представления точки аренды. */
 @Getter
 @Setter
 @Entity
@@ -43,6 +36,5 @@ public class RentPoint {
   private Double longitude;
   private Double latitude;
 
-  @OneToMany
-  private Set<Scooter> scooters = new HashSet<>();
+  @OneToMany private Set<Scooter> scooters = new HashSet<>();
 }

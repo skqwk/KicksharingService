@@ -17,9 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserRentPointDTO {
   private Long id;
-
   private Double longitude;
   private Double latitude;
-
   private Set<UserScooterDTO> scooters = new HashSet<>();
 }

@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import ru.skqwk.kicksharingservice.dto.TariffDTO;
-import ru.skqwk.kicksharingservice.exception.BadInputParameters;
+import ru.skqwk.kicksharingservice.exception.BadInputParametersException;
 import ru.skqwk.kicksharingservice.exception.ResourceNotFoundException;
 import ru.skqwk.kicksharingservice.model.Tariff;
 import ru.skqwk.kicksharingservice.repo.TariffRepository;
@@ -123,7 +122,7 @@ class TariffServiceTest {
   @ParameterizedTest
   @MethodSource("provideInvalidTariffs")
   public void shouldThrowIfTariffInvalid(TariffDTO tariffDTO) {
-    Assertions.assertThrows(BadInputParameters.class, () -> tariffService.addNewTariff(tariffDTO));
+    Assertions.assertThrows(BadInputParametersException.class, () -> tariffService.addNewTariff(tariffDTO));
   }
 
   private Tariff createValidSettlementTariff() {

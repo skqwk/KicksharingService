@@ -10,7 +10,7 @@ import ru.skqwk.kicksharingservice.dto.RentPointDTO;
 import ru.skqwk.kicksharingservice.dto.UserRentPointDTO;
 import ru.skqwk.kicksharingservice.dto.UserScooterDTO;
 import ru.skqwk.kicksharingservice.enumeration.ScooterStatus;
-import ru.skqwk.kicksharingservice.exception.BadInputParameters;
+import ru.skqwk.kicksharingservice.exception.BadInputParametersException;
 import ru.skqwk.kicksharingservice.exception.ResourceNotFoundException;
 import ru.skqwk.kicksharingservice.model.RentPoint;
 import ru.skqwk.kicksharingservice.model.Scooter;
@@ -42,6 +42,7 @@ public class RentPointServiceImpl implements RentPointService {
    */
   @Override
   public List<RentPointClosestDTO> findClosestRentPoints(double latitude, double longitude) {
+    validate(latitude, longitude);
 
     return rentPointRepository
         .find10ClosestRentPointsOrderedByDistance(latitude, longitude)
@@ -84,7 +85,7 @@ public class RentPointServiceImpl implements RentPointService {
    */
   @Override
   public RentPoint addNewRentPoint(RentPointDTO newRentPointDTO) {
-    validate(newRentPointDTO);
+    validate(newRentPointDTO.getLatitude(), newRentPointDTO.getLongitude());
     log.info(
         "Add new rent point at lat = {}, lng = {}",
         newRentPointDTO.getLatitude(),
@@ -94,17 +95,14 @@ public class RentPointServiceImpl implements RentPointService {
     return rentPointRepository.save(newRentPoint);
   }
 
-  private void validate(RentPointDTO rentPoint) {
+  private void validate(double latitude, double longitude) {
     // The latitude must be a number between -90 and 90 and the longitude between -180 and 180
     try {
-      Validator.requireInterval(rentPoint.getLatitude(), -90, 90);
-      Validator.requireInterval(rentPoint.getLongitude(), -180, 180);
+      Validator.requireInterval(latitude, -90, 90);
+      Validator.requireInterval(longitude, -180, 180);
     } catch (IllegalArgumentException ex) {
-      log.warn(
-          "Try add rent point with invalid lat = {}, lng = {}",
-          rentPoint.getLatitude(),
-          rentPoint.getLongitude());
-      throw new BadInputParameters(
+      log.warn("Try add rent point with invalid lat = {}, lng = {}", latitude, longitude);
+      throw new BadInputParametersException(
           "The latitude must be a number between -90 and 90 and the longitude between -180 and 180");
     }
   }
@@ -139,7 +137,7 @@ public class RentPointServiceImpl implements RentPointService {
   @Override
   public RentPoint updateRentPoint(Long id, RentPointDTO updatedRentPoint) {
     findRentPoint(id);
-    validate(updatedRentPoint);
+    validate(updatedRentPoint.getLatitude(), updatedRentPoint.getLongitude());
     RentPoint updated = mapRentPointDTOtoRentPoint(updatedRentPoint);
     updated.setId(id);
     return rentPointRepository.save(updated);

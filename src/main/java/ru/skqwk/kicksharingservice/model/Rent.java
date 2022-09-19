@@ -18,10 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.Instant;
 
-/**
- * Сущность для представления аренды.
- *
- */
+/** Сущность для представления аренды. */
 @Getter
 @Setter
 @Entity

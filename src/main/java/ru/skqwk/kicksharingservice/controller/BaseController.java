@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.skqwk.kicksharingservice.exception.BadInputParameters;
+import ru.skqwk.kicksharingservice.dto.ErrorResponse;
+import ru.skqwk.kicksharingservice.exception.BadInputParametersException;
 import ru.skqwk.kicksharingservice.exception.ConflictDataException;
 import ru.skqwk.kicksharingservice.exception.ResourceNotFoundException;
-import ru.skqwk.kicksharingservice.dto.ErrorResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,13 +16,15 @@ import java.io.OutputStream;
 @Slf4j
 public class BaseController {
 
-  @ExceptionHandler(BadInputParameters.class)
-  void handle(HttpServletResponse response, BadInputParameters exception) throws IOException {
+  @ExceptionHandler(BadInputParametersException.class)
+  void handle(HttpServletResponse response, BadInputParametersException exception)
+      throws IOException {
     sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, exception);
   }
 
   @ExceptionHandler(ConflictDataException.class)
-  void handleConflictData(HttpServletResponse response, ConflictDataException exception) throws IOException {
+  void handleConflictData(HttpServletResponse response, ConflictDataException exception)
+      throws IOException {
     sendResponse(response, HttpServletResponse.SC_CONFLICT, exception);
   }
 
@@ -32,12 +34,14 @@ public class BaseController {
   }
 
   @ExceptionHandler(IllegalStateException.class)
-  void handleIllegalState(HttpServletResponse response, IllegalStateException exception) throws IOException {
+  void handleIllegalState(HttpServletResponse response, IllegalStateException exception)
+      throws IOException {
     sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, exception);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
-  void handleIllegalArgument(HttpServletResponse response, IllegalArgumentException exception) throws IOException {
+  void handleIllegalArgument(HttpServletResponse response, IllegalArgumentException exception)
+      throws IOException {
     sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, exception);
   }
 

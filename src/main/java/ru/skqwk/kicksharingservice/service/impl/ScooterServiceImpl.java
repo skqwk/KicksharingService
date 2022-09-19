@@ -10,7 +10,6 @@ import ru.skqwk.kicksharingservice.model.Model;
 import ru.skqwk.kicksharingservice.model.Scooter;
 import ru.skqwk.kicksharingservice.repo.ScooterRepository;
 import ru.skqwk.kicksharingservice.service.ModelService;
-import ru.skqwk.kicksharingservice.service.RentPointService;
 import ru.skqwk.kicksharingservice.service.ScooterService;
 
 import java.time.Duration;

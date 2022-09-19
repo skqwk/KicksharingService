@@ -8,9 +8,7 @@ import ru.skqwk.kicksharingservice.service.TariffCalculator;
 
 import java.time.Duration;
 
-/**
- * Сервис-калькулятор для подсчета стоимости аренды по расчетному тарифу.
- */
+/** Сервис-калькулятор для подсчета стоимости аренды по расчетному тарифу. */
 @Service
 public class SettlementTariffCalculator implements TariffCalculator {
 

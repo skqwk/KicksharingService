@@ -9,10 +9,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.skqwk.kicksharingservice.dto.UserAccountEditDTO;
-import ru.skqwk.kicksharingservice.enumeration.UserRole;
-import ru.skqwk.kicksharingservice.exception.BadInputParameters;
-import ru.skqwk.kicksharingservice.exception.ConflictDataException;
 import ru.skqwk.kicksharingservice.dto.UserRegisterRequest;
+import ru.skqwk.kicksharingservice.enumeration.UserRole;
+import ru.skqwk.kicksharingservice.exception.BadInputParametersException;
+import ru.skqwk.kicksharingservice.exception.ConflictDataException;
 import ru.skqwk.kicksharingservice.model.UserAccount;
 import ru.skqwk.kicksharingservice.repo.UserRepository;
 import ru.skqwk.kicksharingservice.service.UserService;
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     } else if (managerToken.equals(secretManagerToken)) {
       return UserRole.MANAGER;
     } else {
-      throw new BadInputParameters("Token is invalid");
+      throw new BadInputParametersException("Token is invalid");
     }
   }
 }
