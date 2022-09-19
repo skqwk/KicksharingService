@@ -130,8 +130,8 @@ create table if not exists rent_history
     id          bigint not null
         primary key default nextval('rent_sequence'),
     cost        double precision,
-    finished_in timestamp,
-    started_in  timestamp,
+    finished_at timestamp,
+    started_at  timestamp,
     status      integer,
     scooter_id  bigint
         constraint fk_rent_scooter

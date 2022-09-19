@@ -19,8 +19,8 @@ public class UserRentDTO {
   private Long id;
   private String scooterModel;
   private String tariffName;
-  private Instant startedIn;
-  private Instant finishedIn;
+  private Instant startedAt;
+  private Instant finishedAt;
   private Double cost;
   private RentStatus status;
 }

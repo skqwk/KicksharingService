@@ -113,7 +113,7 @@ public class RentServiceImpl implements RentService {
             .tariff(tariff)
             .scooter(scooter)
             .user(user)
-            .startedIn(Instant.now())
+            .startedAt(Instant.now())
             .build();
 
     rentRepository.saveAndFlush(newRent);
@@ -158,11 +158,11 @@ public class RentServiceImpl implements RentService {
       throw new IllegalStateException(
           String.format("Try complete rent with id = %s, but rent is already finished", rentId));
     }
-    rent.setFinishedIn(Instant.now());
+    rent.setFinishedAt(Instant.now());
 
     Scooter scooter = rent.getScooter();
     scooter.setStatus(ScooterStatus.ON_POINT);
-    scooter.setTimeInUse(Duration.between(rent.getStartedIn(), rent.getFinishedIn()));
+    scooter.setTimeInUse(Duration.between(rent.getStartedAt(), rent.getFinishedAt()));
     scooterService.save(scooter);
 
     rentPoint.getScooters().add(scooter);
@@ -202,8 +202,8 @@ public class RentServiceImpl implements RentService {
         .scooterModel(rent.getScooter() != null ? rent.getScooter().getModel().getName() : null)
         .tariffName(rent.getTariff() != null ? rent.getTariff().getName() : null)
         .cost(rent.getCost())
-        .startedIn(rent.getStartedIn())
-        .finishedIn(rent.getFinishedIn())
+        .startedAt(rent.getStartedAt())
+        .finishedAt(rent.getFinishedAt())
         .status(rent.getStatus())
         .build();
   }
@@ -216,8 +216,8 @@ public class RentServiceImpl implements RentService {
                 ? UserAccountDTO.builder().email(user.getEmail()).age(user.getAge()).build()
                 : null)
         .cost(rent.getCost())
-        .startedIn(rent.getStartedIn())
-        .finishedIn(rent.getFinishedIn())
+        .startedAt(rent.getStartedAt())
+        .finishedAt(rent.getFinishedAt())
         .status(rent.getStatus())
         .scooter(rent.getScooter())
         .tariff(rent.getTariff())

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 import ru.skqwk.kicksharingservice.dto.ModelDTO;
 import ru.skqwk.kicksharingservice.dto.NewScooterDTO;
 import ru.skqwk.kicksharingservice.dto.RentPointDTO;
@@ -19,7 +20,6 @@ import ru.skqwk.kicksharingservice.dto.UserRentDTO;
 import ru.skqwk.kicksharingservice.enumeration.RentStatus;
 import ru.skqwk.kicksharingservice.enumeration.ScooterStatus;
 import ru.skqwk.kicksharingservice.enumeration.TariffType;
-import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 import ru.skqwk.kicksharingservice.model.Model;
 import ru.skqwk.kicksharingservice.model.Rent;
 import ru.skqwk.kicksharingservice.model.RentPoint;
@@ -121,8 +121,8 @@ class RentControllerTest extends EntityControllerTest {
     Assertions.assertEquals(model.getName(), userRentDTO.getScooterModel());
     Assertions.assertEquals(settlementTariff.getName(), userRentDTO.getTariffName());
     Assertions.assertEquals(RentStatus.STARTED, userRentDTO.getStatus());
-    Assertions.assertTrue(userRentDTO.getStartedIn().isBefore(Instant.now()));
-    Assertions.assertNull(userRentDTO.getFinishedIn());
+    Assertions.assertTrue(userRentDTO.getStartedAt().isBefore(Instant.now()));
+    Assertions.assertNull(userRentDTO.getFinishedAt());
   }
 
   @Test
@@ -133,9 +133,9 @@ class RentControllerTest extends EntityControllerTest {
     Assertions.assertEquals(model.getName(), userRentDTO.getScooterModel());
     Assertions.assertEquals(settlementTariff.getName(), userRentDTO.getTariffName());
     Assertions.assertEquals(RentStatus.FINISHED, userRentDTO.getStatus());
-    Assertions.assertTrue(userRentDTO.getStartedIn().isBefore(Instant.now()));
-    Assertions.assertTrue(userRentDTO.getStartedIn().isBefore(userRentDTO.getFinishedIn()));
-    Assertions.assertTrue(userRentDTO.getStartedIn().isBefore(Instant.now()));
+    Assertions.assertTrue(userRentDTO.getStartedAt().isBefore(Instant.now()));
+    Assertions.assertTrue(userRentDTO.getStartedAt().isBefore(userRentDTO.getFinishedAt()));
+    Assertions.assertTrue(userRentDTO.getStartedAt().isBefore(Instant.now()));
     Assertions.assertNotNull(userRentDTO.getCost());
     Assertions.assertEquals(1, getRentPoint(secondRentPoint.getId()).getScooters().size());
     Assertions.assertEquals(0, getRentPoint(firstRentPoint.getId()).getScooters().size());
@@ -152,10 +152,10 @@ class RentControllerTest extends EntityControllerTest {
     Assertions.assertEquals(model.getName(), userRentDTO.getScooterModel());
     Assertions.assertEquals(settlementTariff.getName(), userRentDTO.getTariffName());
     Assertions.assertEquals(RentStatus.STARTED, userRentDTO.getStatus());
-    Assertions.assertNull(userRentDTO.getFinishedIn());
+    Assertions.assertNull(userRentDTO.getFinishedAt());
     Assertions.assertEquals(0, getRentPoint(secondRentPoint.getId()).getScooters().size());
     Assertions.assertEquals(ScooterStatus.IN_RENT, getScooter(scooter.getId()).getStatus());
-    Assertions.assertTrue(userRentDTO.getStartedIn().isBefore(Instant.now()));
+    Assertions.assertTrue(userRentDTO.getStartedAt().isBefore(Instant.now()));
   }
 
   @Test
@@ -166,9 +166,9 @@ class RentControllerTest extends EntityControllerTest {
     Assertions.assertEquals(model.getName(), userRentDTO.getScooterModel());
     Assertions.assertEquals(subscriptionTariff.getName(), userRentDTO.getTariffName());
     Assertions.assertEquals(RentStatus.FINISHED, userRentDTO.getStatus());
-    Assertions.assertTrue(userRentDTO.getStartedIn().isBefore(Instant.now()));
-    Assertions.assertTrue(userRentDTO.getStartedIn().isBefore(userRentDTO.getFinishedIn()));
-    Assertions.assertTrue(userRentDTO.getStartedIn().isBefore(Instant.now()));
+    Assertions.assertTrue(userRentDTO.getStartedAt().isBefore(Instant.now()));
+    Assertions.assertTrue(userRentDTO.getStartedAt().isBefore(userRentDTO.getFinishedAt()));
+    Assertions.assertTrue(userRentDTO.getStartedAt().isBefore(Instant.now()));
     Assertions.assertNotNull(userRentDTO.getCost());
     Assertions.assertEquals(1, getRentPoint(firstRentPoint.getId()).getScooters().size());
     Assertions.assertEquals(0, getRentPoint(secondRentPoint.getId()).getScooters().size());

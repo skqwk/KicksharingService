@@ -21,8 +21,8 @@ public class ManagerRentDTO {
   private UserAccountDTO user;
   private Scooter scooter;
   private Tariff tariff;
-  private Instant startedIn;
-  private Instant finishedIn;
+  private Instant startedAt;
+  private Instant finishedAt;
   private Double cost;
   private RentStatus status;
 }

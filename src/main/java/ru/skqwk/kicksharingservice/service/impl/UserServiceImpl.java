@@ -14,6 +14,7 @@ import ru.skqwk.kicksharingservice.enumeration.UserRole;
 import ru.skqwk.kicksharingservice.exception.BadInputParametersException;
 import ru.skqwk.kicksharingservice.exception.ConflictDataException;
 import ru.skqwk.kicksharingservice.model.UserAccount;
+import ru.skqwk.kicksharingservice.repo.RentRepository;
 import ru.skqwk.kicksharingservice.repo.UserRepository;
 import ru.skqwk.kicksharingservice.service.UserService;
 
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private final RentRepository rentRepository;
 
   @Value("${manager-token}")
   private String secretManagerToken;
@@ -95,8 +97,14 @@ public class UserServiceImpl implements UserService {
   @Override
   public void deleteAccount(Long id) {
     UserAccount user = findUser(id);
-    userRepository.deleteById(id);
-    log.info("User with email = {} deleted account", user.getEmail());
+    if (rentRepository.findAllByUser(user).stream().allMatch(r -> r.getFinishedAt() != null)) {
+      userRepository.deleteById(id);
+      log.info("User with email = {} deleted account", user.getEmail());
+    } else {
+      log.warn("Can't delete user with id = {}, because he has uncompleted rent", id);
+      throw new IllegalStateException(
+          String.format("Can't delete user with id = %s, because he has uncompleted rent", id));
+    }
   }
 
   /**

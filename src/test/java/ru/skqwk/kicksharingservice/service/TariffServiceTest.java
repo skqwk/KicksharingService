@@ -52,10 +52,7 @@ class TariffServiceTest {
                 .tariffCost(10.0)
                 .discount(-1.0)
                 .build()),
-        Arguments.of(
-            TariffDTO.builder()
-                .type(SETTLEMENT_TARIFF)
-                .build()),
+        Arguments.of(TariffDTO.builder().type(SETTLEMENT_TARIFF).build()),
         Arguments.of(
             TariffDTO.builder()
                 .type(SUBSCRIPTION_TARIFF)
@@ -122,7 +119,8 @@ class TariffServiceTest {
   @ParameterizedTest
   @MethodSource("provideInvalidTariffs")
   public void shouldThrowIfTariffInvalid(TariffDTO tariffDTO) {
-    Assertions.assertThrows(BadInputParametersException.class, () -> tariffService.addNewTariff(tariffDTO));
+    Assertions.assertThrows(
+        BadInputParametersException.class, () -> tariffService.addNewTariff(tariffDTO));
   }
 
   private Tariff createValidSettlementTariff() {

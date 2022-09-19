@@ -3,6 +3,7 @@ package ru.skqwk.kicksharingservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.skqwk.kicksharingservice.dto.ErrorResponse;
 import ru.skqwk.kicksharingservice.exception.BadInputParametersException;
@@ -43,6 +44,14 @@ public class BaseController {
   void handleIllegalArgument(HttpServletResponse response, IllegalArgumentException exception)
       throws IOException {
     sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, exception);
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  void handleValidationException(
+      HttpServletResponse response, MethodArgumentNotValidException exception) throws IOException {
+    String message = exception.getBindingResult().getFieldError().getDefaultMessage();
+    sendResponse(
+        response, HttpServletResponse.SC_BAD_REQUEST, new BadInputParametersException(message));
   }
 
   void sendResponse(HttpServletResponse response, int status, Exception exception)

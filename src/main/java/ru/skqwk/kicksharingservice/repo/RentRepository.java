@@ -5,8 +5,10 @@ import org.springframework.stereotype.Repository;
 import ru.skqwk.kicksharingservice.enumeration.RentStatus;
 import ru.skqwk.kicksharingservice.model.Rent;
 import ru.skqwk.kicksharingservice.model.Scooter;
+import ru.skqwk.kicksharingservice.model.Tariff;
 import ru.skqwk.kicksharingservice.model.UserAccount;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,4 +21,6 @@ public interface RentRepository extends JpaRepository<Rent, Long> {
   Optional<Rent> findByUserAndStatus(UserAccount user, RentStatus status);
 
   Optional<Rent> findByUserAndId(UserAccount user, Long rentId);
+
+  List<Rent> findAllByTariffAndFinishedAt(Tariff tariff, Instant finishedAt);
 }

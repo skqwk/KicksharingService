@@ -44,7 +44,7 @@ class ScooterServiceTest {
   void shouldCallRepoWhenUpdateScooter() {
     // Arrange
     NewScooterDTO updated = new NewScooterDTO();
-    Scooter returned = Scooter.builder().build();
+    Scooter returned = Scooter.builder().status(ScooterStatus.NOT_ATTACHED).build();
     long id = 1L;
     when(scooterRepository.findById(id)).thenReturn(Optional.of(returned));
 

@@ -27,7 +27,7 @@ public class SubscriptionTariffCalculator implements TariffCalculator {
     Optional<Subscription> subscriptionO =
         subscriptionRepository.findByUserAndTariff(rent.getUser(), subscriptionTariff);
 
-    Duration absoluteDuration = Duration.between(rent.getStartedIn(), rent.getFinishedIn());
+    Duration absoluteDuration = Duration.between(rent.getStartedAt(), rent.getFinishedAt());
     Duration settlementForDuration = subscriptionTariff.getSettlementFor().getDuration();
 
     long relativeDuration = absoluteDuration.dividedBy(settlementForDuration);
