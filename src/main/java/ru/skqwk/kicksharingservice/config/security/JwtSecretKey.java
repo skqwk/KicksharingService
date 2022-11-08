@@ -1,4 +1,4 @@
-package ru.skqwk.kicksharingservice.security;
+package ru.skqwk.kicksharingservice.config.security;
 
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;

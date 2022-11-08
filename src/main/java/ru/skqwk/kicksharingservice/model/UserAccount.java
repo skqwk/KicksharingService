@@ -18,10 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Collection;
 
-/**
- * Сущность для представления аккаунтов в системе.
- *
- */
+/** Сущность для представления аккаунтов в системе. */
 @Getter
 @Setter
 @Entity

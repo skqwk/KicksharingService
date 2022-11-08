@@ -99,7 +99,7 @@ class RentServiceTest {
         .thenReturn(
             Optional.of(
                 Rent.builder()
-                    .startedIn(Instant.now())
+                    .startedAt(Instant.now())
                     .scooter(
                         Scooter.builder()
                             .id(1L)
@@ -120,7 +120,7 @@ class RentServiceTest {
     verify(settlementCalculator).calculate(any());
     verify(rentRepository).saveAndFlush(any(Rent.class));
     Assertions.assertEquals(20.0, rent.getCost());
-    Assertions.assertNotNull(rent.getFinishedIn());
+    Assertions.assertNotNull(rent.getFinishedAt());
     Assertions.assertEquals(1, returnedRentPoint.getScooters().size());
   }
 
@@ -148,7 +148,7 @@ class RentServiceTest {
     verify(userService).findUser(1L);
     verify(scooterService).findScooter(1L);
     verify(tariffService).findTariff(1L);
-    Assertions.assertNotNull(rent.getStartedIn());
+    Assertions.assertNotNull(rent.getStartedAt());
     Assertions.assertEquals(0, returnedRentPoint.getScooters().size());
     Assertions.assertEquals(ScooterStatus.IN_RENT, returnedScooter.getStatus());
   }

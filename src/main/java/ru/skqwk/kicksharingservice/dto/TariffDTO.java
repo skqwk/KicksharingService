@@ -10,10 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.temporal.ChronoUnit;
 
-/**
- * Сущность для представления тарифа пользователю.
- *
- */
+/** Сущность для представления тарифа пользователю. */
 @Getter
 @Builder
 @NoArgsConstructor

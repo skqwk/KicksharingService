@@ -1,4 +1,4 @@
-package ru.skqwk.kicksharingservice.security;
+package ru.skqwk.kicksharingservice.config.security;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

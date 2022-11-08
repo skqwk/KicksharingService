@@ -10,7 +10,6 @@ import ru.skqwk.kicksharingservice.model.Model;
 import ru.skqwk.kicksharingservice.model.Scooter;
 import ru.skqwk.kicksharingservice.repo.ScooterRepository;
 import ru.skqwk.kicksharingservice.service.ModelService;
-import ru.skqwk.kicksharingservice.service.RentPointService;
 import ru.skqwk.kicksharingservice.service.ScooterService;
 
 import java.time.Duration;
@@ -46,10 +45,20 @@ public class ScooterServiceImpl implements ScooterService {
    */
   @Override
   public Scooter updateScooter(Long id, NewScooterDTO updatedScooterDTO) {
-    findScooter(id);
-    Scooter updatedScooter = mapNewScooterDTOtoScooter(updatedScooterDTO);
-    updatedScooter.setId(id);
-    return scooterRepository.save(updatedScooter);
+    Scooter scooter = findScooter(id);
+    if (ScooterStatus.NOT_ATTACHED.equals(scooter.getStatus())) {
+      Scooter updatedScooter = mapNewScooterDTOtoScooter(updatedScooterDTO);
+      updatedScooter.setStatus(scooter.getStatus());
+      updatedScooter.setId(id);
+      return scooterRepository.save(updatedScooter);
+    } else {
+      log.warn(
+          "Can't update scooter with id = {}, because its state = {}", id, scooter.getStatus());
+      throw new IllegalStateException(
+          String.format(
+              "Can't update scooter with id = %s, because its state = %s",
+              id, scooter.getStatus()));
+    }
   }
 
   private Scooter mapNewScooterDTOtoScooter(NewScooterDTO scooterDTO) {

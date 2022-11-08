@@ -18,10 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.Instant;
 
-/**
- * Сущность для представления аренды.
- *
- */
+/** Сущность для представления аренды. */
 @Getter
 @Setter
 @Entity
@@ -47,8 +44,8 @@ public class Rent {
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private Tariff tariff;
 
-  private Instant startedIn;
-  private Instant finishedIn;
+  private Instant startedAt;
+  private Instant finishedAt;
   private Double cost;
   private RentStatus status;
 }

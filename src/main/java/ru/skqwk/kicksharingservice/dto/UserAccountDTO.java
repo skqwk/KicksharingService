@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-/**
- * Сущность для представления аккаунта пользователю.
- *
- */
+/** Сущность для представления аккаунта пользователю. */
 @Getter
 @Builder
 @NoArgsConstructor

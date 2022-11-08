@@ -1,11 +1,11 @@
 package ru.skqwk.kicksharingservice.controller;
 
 import org.springframework.http.MediaType;
+import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 import ru.skqwk.kicksharingservice.dto.ModelDTO;
 import ru.skqwk.kicksharingservice.dto.NewScooterDTO;
 import ru.skqwk.kicksharingservice.dto.RentPointDTO;
 import ru.skqwk.kicksharingservice.dto.TariffDTO;
-import ru.skqwk.kicksharingservice.dto.AuthOkResponse;
 import ru.skqwk.kicksharingservice.model.Model;
 import ru.skqwk.kicksharingservice.model.RentPoint;
 import ru.skqwk.kicksharingservice.model.Scooter;

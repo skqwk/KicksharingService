@@ -2,7 +2,6 @@ jwt:
   secretKey: "kicksharingmegaverysupersecretkey"
   tokenPrefix: ""
   tokenExpirationAfterDays: 14
-
 manager-token: "manager_token"
 
 spring:

@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 /** Сущность для реквизитов пользователя для регистрации. */
@@ -19,6 +20,7 @@ public class UserRegisterRequest {
 
   private String managerToken;
 
+  @NotNull(message = "Age is mandatory")
   @Positive(message = "Age must be positive")
   private Integer age;
 }

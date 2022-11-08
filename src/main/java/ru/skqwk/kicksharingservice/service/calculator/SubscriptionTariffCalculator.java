@@ -14,9 +14,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
-/**
- * Сервис-калькулятор для подсчета стоимости аренды по тарифу с подпиской.
- */
+/** Сервис-калькулятор для подсчета стоимости аренды по тарифу с подпиской. */
 @Service
 @AllArgsConstructor
 public class SubscriptionTariffCalculator implements TariffCalculator {
@@ -29,7 +27,7 @@ public class SubscriptionTariffCalculator implements TariffCalculator {
     Optional<Subscription> subscriptionO =
         subscriptionRepository.findByUserAndTariff(rent.getUser(), subscriptionTariff);
 
-    Duration absoluteDuration = Duration.between(rent.getStartedIn(), rent.getFinishedIn());
+    Duration absoluteDuration = Duration.between(rent.getStartedAt(), rent.getFinishedAt());
     Duration settlementForDuration = subscriptionTariff.getSettlementFor().getDuration();
 
     long relativeDuration = absoluteDuration.dividedBy(settlementForDuration);

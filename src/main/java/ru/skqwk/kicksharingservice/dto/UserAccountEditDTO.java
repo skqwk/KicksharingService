@@ -20,7 +20,7 @@ public class UserAccountEditDTO {
   @Pattern(regexp = "^(.+)@(\\S+)$", message = "Email is invalid")
   private String email;
 
-  @Length(min = 8, max = 20, message = "Length from 8 to 20")
+  @Length(min = 8, max = 20, message = "Password length must be from 8 to 20")
   private String password;
 
   @Positive(message = "Age must be positive")

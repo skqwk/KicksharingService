@@ -14,6 +14,8 @@ import java.time.Duration;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewScooterDTO {
-  @NotNull Long modelId;
+  @NotNull(message = "modelId is mandatory")
+  Long modelId;
+
   Duration timeInUse;
 }

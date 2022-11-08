@@ -11,9 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Сервис для создания бина с валидаторами тарифов.
- */
+/** Сервис для создания бина с валидаторами тарифов. */
 @Slf4j
 @Configuration
 @AllArgsConstructor

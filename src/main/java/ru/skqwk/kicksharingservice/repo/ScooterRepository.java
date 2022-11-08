@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ScooterRepository extends JpaRepository<Scooter, Long> {
-    List<Scooter> findAllByModel(Model model);
+  List<Scooter> findAllByModel(Model model);
 }

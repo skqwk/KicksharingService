@@ -8,16 +8,14 @@ import ru.skqwk.kicksharingservice.service.TariffCalculator;
 
 import java.time.Duration;
 
-/**
- * Сервис-калькулятор для подсчета стоимости аренды по расчетному тарифу.
- */
+/** Сервис-калькулятор для подсчета стоимости аренды по расчетному тарифу. */
 @Service
 public class SettlementTariffCalculator implements TariffCalculator {
 
   @Override
   public Double calculate(Rent rent) {
     Tariff settlementTariff = rent.getTariff();
-    Duration absoluteDuration = Duration.between(rent.getStartedIn(), rent.getFinishedIn());
+    Duration absoluteDuration = Duration.between(rent.getStartedAt(), rent.getFinishedAt());
     Duration settlementForDuration = settlementTariff.getSettlementFor().getDuration();
 
     long relativeDuration = absoluteDuration.dividedBy(settlementForDuration);

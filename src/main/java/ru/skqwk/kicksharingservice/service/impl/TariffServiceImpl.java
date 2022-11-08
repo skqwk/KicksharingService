@@ -8,6 +8,7 @@ import ru.skqwk.kicksharingservice.dto.UserTariffDTO;
 import ru.skqwk.kicksharingservice.enumeration.TariffType;
 import ru.skqwk.kicksharingservice.exception.ResourceNotFoundException;
 import ru.skqwk.kicksharingservice.model.Tariff;
+import ru.skqwk.kicksharingservice.repo.RentRepository;
 import ru.skqwk.kicksharingservice.repo.TariffRepository;
 import ru.skqwk.kicksharingservice.service.TariffService;
 import ru.skqwk.kicksharingservice.service.TariffValidator;
@@ -24,6 +25,7 @@ public class TariffServiceImpl implements TariffService {
 
   private final TariffRepository tariffRepository;
   private final Map<TariffType, TariffValidator> tariffToValidator;
+  private final RentRepository rentRepository;
 
   /**
    * Удаляет тариф.
@@ -32,9 +34,15 @@ public class TariffServiceImpl implements TariffService {
    */
   @Override
   public void deleteTariff(Long id) {
-    findTariff(id);
-    tariffRepository.deleteById(id);
-    log.info("Tariff with id = {} is deleted", id);
+    Tariff tariff = findTariff(id);
+    if (rentRepository.findAllByTariffAndFinishedAt(tariff, null).size() == 0) {
+      tariffRepository.deleteById(id);
+      log.info("Tariff with id = {} is deleted", id);
+    } else {
+      log.warn("Can't delete tariff with id = {}, because it in use", id);
+      throw new IllegalStateException(
+          String.format("Can't delete tariff with id = %s, because it in use", id));
+    }
   }
 
   /**
@@ -89,10 +97,16 @@ public class TariffServiceImpl implements TariffService {
   @Override
   public Tariff updateTariff(Long id, TariffDTO updatedTariffDTO) {
     tariffToValidator.get(updatedTariffDTO.getType()).validate(updatedTariffDTO);
-    findTariff(id);
-    Tariff updatedTariff = mapTariffDTOtoTariff(updatedTariffDTO);
-    updatedTariff.setId(id);
-    return tariffRepository.save(updatedTariff);
+    Tariff tariff = findTariff(id);
+    if (rentRepository.findAllByTariffAndFinishedAt(tariff, null).size() == 0) {
+      Tariff updatedTariff = mapTariffDTOtoTariff(updatedTariffDTO);
+      updatedTariff.setId(id);
+      return tariffRepository.save(updatedTariff);
+    } else {
+      log.warn("Can't update tariff with id = {}, because it in use", id);
+      throw new IllegalStateException(
+          String.format("Can't update tariff with id = %s, because it in use", id));
+    }
   }
 
   /** Находит все тарифы для пользовательского просмотра. */

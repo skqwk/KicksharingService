@@ -13,6 +13,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModelDTO {
-  @NotBlank private String name;
-  @NotBlank private String manufacturer;
+  @NotBlank(message = "Model name should be not blank")
+  private String name;
+
+  @NotBlank(message = "Model manufacturer should be not blank")
+  private String manufacturer;
 }

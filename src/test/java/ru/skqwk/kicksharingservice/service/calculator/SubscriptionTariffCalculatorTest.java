@@ -19,138 +19,137 @@ import static org.mockito.Mockito.when;
 
 class SubscriptionTariffCalculatorTest {
 
-    private TariffCalculator tariffCalculator;
-    private SubscriptionRepository subscriptionRepository = mock(SubscriptionRepository.class);
+  private TariffCalculator tariffCalculator;
+  private final SubscriptionRepository subscriptionRepository = mock(SubscriptionRepository.class);
 
-    @BeforeEach
-    public void setUp() {
-        tariffCalculator = new SubscriptionTariffCalculator(subscriptionRepository);
-    }
+  @BeforeEach
+  public void setUp() {
+    tariffCalculator = new SubscriptionTariffCalculator(subscriptionRepository);
+  }
 
-    // Для тарифов по подписке цена считается по формуле:
-    //
-    // Если у пользователя ЕСТЬ подписка и она НЕ истекла
-    // (длительность_аренды * стоимость_аренды) * (1.0 - скидка)
-    //
-    // Иначе:
-    // стоимость_подписки + (длительность_аренды * стоимость_аренды) * (1.0 - скидка)
+  // Для тарифов по подписке цена считается по формуле:
+  //
+  // Если у пользователя ЕСТЬ подписка и она НЕ истекла
+  // (длительность_аренды * стоимость_аренды) * (1.0 - скидка)
+  //
+  // Иначе:
+  // стоимость_подписки + (длительность_аренды * стоимость_аренды) * (1.0 - скидка)
 
-    @Test
-    void shouldAddTariffCostIfUserNotSubscriber() {
-        // Arrange
-        double settlementCost = 10.0;
-        double tariffCost = 20.0;
-        double discount = 0.1;
-        int durationInHours = 2;
+  @Test
+  void shouldAddTariffCostIfUserNotSubscriber() {
+    // Arrange
+    double settlementCost = 10.0;
+    double tariffCost = 20.0;
+    double discount = 0.1;
+    int durationInHours = 2;
 
-        UserAccount user = UserAccount.builder().build();
+    UserAccount user = UserAccount.builder().build();
 
-        Tariff tariff = Tariff.builder()
-                .settlementFor(ChronoUnit.HOURS)
-                .settlementCost(settlementCost)
-                .discount(discount)
-                .durationInHours(2)
-                .tariffCost(tariffCost)
-                .build();
+    Tariff tariff =
+        Tariff.builder()
+            .settlementFor(ChronoUnit.HOURS)
+            .settlementCost(settlementCost)
+            .discount(discount)
+            .durationInHours(2)
+            .tariffCost(tariffCost)
+            .build();
 
-        Rent rent = Rent.builder()
-                .user(user)
-                .tariff(tariff)
-                .startedIn(Instant.now())
-                .finishedIn(Instant.now().plus(durationInHours, ChronoUnit.HOURS))
-                .build();
+    Rent rent =
+        Rent.builder()
+            .user(user)
+            .tariff(tariff)
+            .startedAt(Instant.now())
+            .finishedAt(Instant.now().plus(durationInHours, ChronoUnit.HOURS))
+            .build();
 
-        when(subscriptionRepository.findByUserAndTariff(user, tariff))
-                .thenReturn(Optional.empty());
+    when(subscriptionRepository.findByUserAndTariff(user, tariff)).thenReturn(Optional.empty());
 
+    // Act
+    double calculatedCost = tariffCalculator.calculate(rent);
 
-        // Act
-        double calculatedCost = tariffCalculator.calculate(rent);
+    // Assert
+    double expectedCost = tariffCost + (durationInHours * settlementCost) * (1 - discount);
+    Assertions.assertEquals(expectedCost, calculatedCost);
+  }
 
-        // Assert
-        double expectedCost = tariffCost + (durationInHours * settlementCost) * (1 - discount);
-        Assertions.assertEquals(expectedCost, calculatedCost);
-    }
+  @Test
+  void shouldAddTariffCostIfSubscriptionIsExpired() {
+    // Arrange
+    double settlementCost = 10.0;
+    double tariffCost = 20.0;
+    double discount = 0.1;
+    int durationInHours = 2;
 
-    @Test
-    void shouldAddTariffCostIfSubscriptionIsExpired() {
-        // Arrange
-        double settlementCost = 10.0;
-        double tariffCost = 20.0;
-        double discount = 0.1;
-        int durationInHours = 2;
+    UserAccount user = UserAccount.builder().build();
 
-        UserAccount user = UserAccount.builder().build();
+    Tariff tariff =
+        Tariff.builder()
+            .settlementFor(ChronoUnit.HOURS)
+            .settlementCost(settlementCost)
+            .discount(discount)
+            .durationInHours(2)
+            .tariffCost(tariffCost)
+            .build();
 
-        Tariff tariff = Tariff.builder()
-                .settlementFor(ChronoUnit.HOURS)
-                .settlementCost(settlementCost)
-                .discount(discount)
-                .durationInHours(2)
-                .tariffCost(tariffCost)
-                .build();
+    Rent rent =
+        Rent.builder()
+            .user(user)
+            .tariff(tariff)
+            .startedAt(Instant.now())
+            .finishedAt(Instant.now().plus(durationInHours, ChronoUnit.HOURS))
+            .build();
 
-        Rent rent = Rent.builder()
-                .user(user)
-                .tariff(tariff)
-                .startedIn(Instant.now())
-                .finishedIn(Instant.now().plus(durationInHours, ChronoUnit.HOURS))
-                .build();
+    Subscription expiredSubscription =
+        Subscription.builder().expiredIn(Instant.now().minus(2L, ChronoUnit.HOURS)).build();
 
-        Subscription expiredSubscription = Subscription.builder()
-                .expiredIn(Instant.now().minus(2L, ChronoUnit.HOURS))
-                .build();
+    when(subscriptionRepository.findByUserAndTariff(user, tariff))
+        .thenReturn(Optional.of(expiredSubscription));
 
-        when(subscriptionRepository.findByUserAndTariff(user, tariff))
-                .thenReturn(Optional.of(expiredSubscription));
+    // Act
+    double calculatedCost = tariffCalculator.calculate(rent);
 
+    // Assert
+    double expectedCost = tariffCost + (durationInHours * settlementCost) * (1 - discount);
+    Assertions.assertEquals(expectedCost, calculatedCost);
+  }
 
-        // Act
-        double calculatedCost = tariffCalculator.calculate(rent);
+  @Test
+  void shouldNotAddTariffCostIfSubscriptionIsActual() {
+    // Arrange
+    double settlementCost = 10.0;
+    double tariffCost = 20.0;
+    double discount = 0.1;
+    int durationInHours = 2;
 
-        // Assert
-        double expectedCost = tariffCost + (durationInHours * settlementCost) * (1 - discount);
-        Assertions.assertEquals(expectedCost, calculatedCost);
-    }
+    UserAccount user = UserAccount.builder().build();
 
+    Tariff tariff =
+        Tariff.builder()
+            .settlementFor(ChronoUnit.HOURS)
+            .settlementCost(settlementCost)
+            .discount(discount)
+            .tariffCost(tariffCost)
+            .build();
 
-    @Test
-    void shouldNotAddTariffCostIfSubscriptionIsActual() {
-        // Arrange
-        double settlementCost = 10.0;
-        double tariffCost = 20.0;
-        double discount = 0.1;
-        int durationInHours = 2;
+    Rent rent =
+        Rent.builder()
+            .user(user)
+            .tariff(tariff)
+            .startedAt(Instant.now())
+            .finishedAt(Instant.now().plus(durationInHours, ChronoUnit.HOURS))
+            .build();
 
-        UserAccount user = UserAccount.builder().build();
+    Subscription actualSubscription =
+        Subscription.builder().expiredIn(Instant.now().plus(2L, ChronoUnit.HOURS)).build();
 
-        Tariff tariff = Tariff.builder()
-                .settlementFor(ChronoUnit.HOURS)
-                .settlementCost(settlementCost)
-                .discount(discount)
-                .tariffCost(tariffCost)
-                .build();
+    when(subscriptionRepository.findByUserAndTariff(user, tariff))
+        .thenReturn(Optional.of(actualSubscription));
 
-        Rent rent = Rent.builder()
-                .user(user)
-                .tariff(tariff)
-                .startedIn(Instant.now())
-                .finishedIn(Instant.now().plus(durationInHours, ChronoUnit.HOURS))
-                .build();
+    // Act
+    double calculatedCost = tariffCalculator.calculate(rent);
 
-        Subscription actualSubscription = Subscription.builder()
-                .expiredIn(Instant.now().plus(2L, ChronoUnit.HOURS))
-                .build();
-
-        when(subscriptionRepository.findByUserAndTariff(user, tariff))
-                .thenReturn(Optional.of(actualSubscription));
-
-
-        // Act
-        double calculatedCost = tariffCalculator.calculate(rent);
-
-        // Assert
-        double expectedCost = (durationInHours * settlementCost) * (1 - discount);
-        Assertions.assertEquals(expectedCost, calculatedCost);
-    }
+    // Assert
+    double expectedCost = (durationInHours * settlementCost) * (1 - discount);
+    Assertions.assertEquals(expectedCost, calculatedCost);
+  }
 }
