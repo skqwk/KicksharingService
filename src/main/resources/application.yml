@@ -18,3 +18,6 @@ spring:
     username: spring-server@yandex.ru
     password: y/%-q%,Rz[#SV9J
     port: '465'
+
+  kafka:
+    bootstrap-servers: 'localhost:9092'

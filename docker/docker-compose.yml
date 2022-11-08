@@ -11,6 +11,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=${DATABASE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=${KAFKA_CONTAINER}:${KAFKA_PORT}
     ports:
       - "8080:8080"
     depends_on:
@@ -32,6 +33,20 @@ services:
       - ./sql:/docker-entrypoint-initdb.d
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
-      interval: 10s
-      timeout: 5s
+      interval: 5s
+      timeout: 2s
       retries: 5
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: ${ZOOKEEPER_CONTAINER}
+    ports:
+      - ${ZOOKEEPER_PORT}:${ZOOKEEPER_PORT}
+  kafka:
+    image: wurstmeister/kafka
+    container_name: ${KAFKA_CONTAINER}
+    ports:
+      - ${KAFKA_PORT}:${KAFKA_PORT}
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: ${KAFKA_CONTAINER}
+      KAFKA_ZOOKEEPER_CONNECT: ${ZOOKEEPER_CONTAINER}:${ZOOKEEPER_PORT}

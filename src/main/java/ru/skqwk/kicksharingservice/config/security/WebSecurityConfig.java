@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(AUTH_WHITELIST)
         .permitAll()
-        .antMatchers("/auth", "/register", "/ping")
+        .antMatchers("/auth", "/register", "/ping","/message")
         .permitAll()
         // аутентифицировать данные запросы
         .antMatchers("/user/**", "/profile/history")
