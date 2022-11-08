@@ -29,7 +29,6 @@ class ScooterControllerTest extends EntityControllerTest {
 
   @BeforeEach
   void setUp() throws Exception {
-    scooterRepository.deleteAll();
     authOkResponse = registerManager(generateEmail());
   }
 
@@ -129,7 +128,7 @@ class ScooterControllerTest extends EntityControllerTest {
     // when: create new scooters
     ModelDTO modelDTO = ModelDTO.builder().manufacturer("China").name("BMX 2000").build();
     Model model = createModelAndExpect(authOkResponse, modelDTO, HttpStatus.OK.value());
-
+    long previousCount = scooterRepository.count();
     NewScooterDTO scooterDTO1 =
         NewScooterDTO.builder().modelId(model.getId()).timeInUse(Duration.ZERO).build();
     NewScooterDTO scooterDTO2 =
@@ -149,7 +148,7 @@ class ScooterControllerTest extends EntityControllerTest {
 
     // then: find them all
     Scooter[] scooters = mapper.readValue(scootersString, Scooter[].class);
-    Assertions.assertEquals(2, scooters.length);
+    Assertions.assertEquals( previousCount + 2, scooters.length);
   }
 
   @Test
